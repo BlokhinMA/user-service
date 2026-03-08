@@ -2,6 +2,7 @@ package ru.mikhailblokhin.utils;
 
 import ru.mikhailblokhin.dtos.UserRequestDto;
 import ru.mikhailblokhin.services.UserService;
+import ru.mikhailblokhin.services.UserServiceImpl;
 
 import java.util.Scanner;
 
@@ -9,7 +10,7 @@ import static ru.mikhailblokhin.utils.ConsoleUtils.*;
 
 public class Application {
 
-    private static final UserService userService = new UserService();
+    private static final UserService USER_SERVICE_IMPL = new UserServiceImpl();
 
     public static void run() {
         boolean isRunning = true;
@@ -21,7 +22,7 @@ public class Application {
             switch (value) {
                 case "1":
                     System.out.println("ВСЕ ПОЛЬЗОВАТЕЛИ");
-                    System.out.println(userService.readAll());
+                    System.out.println(USER_SERVICE_IMPL.readAll());
                     break;
                 case "2":
                     System.out.println("СОЗДАНИЕ ПОЛЬЗОВАТЕЛЯ");
@@ -45,13 +46,13 @@ public class Application {
                             emailForCreatingUser,
                             ageForCreatingUser
                     );
-                    userService.create(creatingUser);
+                    USER_SERVICE_IMPL.create(creatingUser);
                     break;
                 case "3":
                     System.out.println("ПРОСМОТР ПОЛЬЗОВАТЕЛЯ");
                     System.out.print("Введите id пользователя: ");
                     long idForShowing = getLongValueFromConsole(scanner);
-                    System.out.println(userService.read(idForShowing));
+                    System.out.println(USER_SERVICE_IMPL.read(idForShowing));
                     break;
                 case "4":
                     System.out.println("ОБНОВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ");
@@ -81,7 +82,7 @@ public class Application {
                     );
 
                     try {
-                        userService.update(updatingUser);
+                        USER_SERVICE_IMPL.update(updatingUser);
                     } catch (NullPointerException e) {
                         System.out.println("Пользователя с таким id не существует");
                     }
@@ -91,13 +92,13 @@ public class Application {
                     System.out.print("Введите id пользователя: ");
                     long idForDeleting = getLongValueFromConsole(scanner);
                     try {
-                        userService.delete(idForDeleting);
+                        USER_SERVICE_IMPL.delete(idForDeleting);
                     } catch (NullPointerException e) {
                         System.out.println("Пользователя с таким id не существует");
                     }
                     break;
                 case "6":
-                    userService.exit();
+                    USER_SERVICE_IMPL.exit();
                     scanner.close();
                     isRunning = false;
                     break;

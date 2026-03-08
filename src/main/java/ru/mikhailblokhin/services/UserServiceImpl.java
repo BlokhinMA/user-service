@@ -7,13 +7,14 @@ import ru.mikhailblokhin.dtos.UserResponseDto;
 import ru.mikhailblokhin.entities.User;
 import ru.mikhailblokhin.mappers.UserMapper;
 import ru.mikhailblokhin.repositories.UserRepository;
+import ru.mikhailblokhin.repositories.UserRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository = new UserRepository();
+    private final UserRepository repository = new UserRepositoryImpl();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 

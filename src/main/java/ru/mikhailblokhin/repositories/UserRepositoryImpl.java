@@ -8,7 +8,7 @@ import ru.mikhailblokhin.entities.User;
 
 import java.util.List;
 
-public class UserRepositoryImpl {
+public class UserRepositoryImpl implements UserRepository {
 
     private final SessionFactory sessionFactory = new Configuration()
             .configure("hibernate.cfg.xml")
