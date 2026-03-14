@@ -1,6 +1,7 @@
 package ru.mikhailblokhin.dtos;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class UserResponseDto {
 
@@ -70,5 +71,17 @@ public class UserResponseDto {
                 ", age=" + age +
                 ", createdAt=" + createdAt +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UserResponseDto that = (UserResponseDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(age, that.age) && Objects.equals(createdAt, that.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, age, createdAt);
     }
 }

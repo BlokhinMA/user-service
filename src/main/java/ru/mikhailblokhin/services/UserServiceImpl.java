@@ -14,9 +14,17 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository = new UserRepositoryImpl();
+    private final UserRepository repository;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    public UserServiceImpl() {
+        repository = new UserRepositoryImpl();
+    }
+
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
+    }
 
     public void create(UserRequestDto dto) {
         User user = UserMapper.toEntity(dto);
