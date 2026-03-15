@@ -10,10 +10,18 @@ import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private final SessionFactory sessionFactory = new Configuration()
-            .configure("hibernate.cfg.xml")
-            .addAnnotatedClass(User.class)
-            .buildSessionFactory();
+    private final SessionFactory sessionFactory;
+
+    public UserRepositoryImpl() {
+        sessionFactory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
+    }
+
+    public UserRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void create(User user) {
         Transaction transaction = null;
@@ -62,7 +70,6 @@ public class UserRepositoryImpl implements UserRepository {
             transaction.begin();
 
             User updatingUser = session.find(User.class, user.getId());
-            System.out.println(user.getName());
             updatingUser.setName(user.getName());
             updatingUser.setEmail(user.getEmail());
             updatingUser.setAge(user.getAge());

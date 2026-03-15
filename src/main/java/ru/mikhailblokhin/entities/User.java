@@ -29,11 +29,25 @@ public class User {
     public User() {
     }
 
+    public User(String name, String email, Integer age) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
+
     public User(Long id, String name, String email, Integer age) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
+    }
+
+    public User(Long id, String name, String email, Integer age, LocalDateTime createdAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.createdAt = createdAt;
     }
 
     @PrePersist
@@ -75,6 +89,10 @@ public class User {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
