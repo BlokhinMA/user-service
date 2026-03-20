@@ -1,8 +1,10 @@
-package ru.mikhailblokhin.mappers;
+package ru.mikhailblokhin.userservice.mappers;
 
-import ru.mikhailblokhin.dtos.UserRequestDto;
-import ru.mikhailblokhin.dtos.UserResponseDto;
-import ru.mikhailblokhin.entities.User;
+import ru.mikhailblokhin.userservice.dtos.UserRequestDto;
+import ru.mikhailblokhin.userservice.dtos.UserResponseDto;
+import ru.mikhailblokhin.userservice.entities.User;
+
+import java.util.List;
 
 public class UserMapper {
 
@@ -23,5 +25,11 @@ public class UserMapper {
                 user.getAge(),
                 user.getCreatedAt()
         );
+    }
+
+    public static List<UserResponseDto> toDtoList(List<User> users) {
+        return users.stream()
+                .map(UserMapper::toDto)
+                .toList();
     }
 }
