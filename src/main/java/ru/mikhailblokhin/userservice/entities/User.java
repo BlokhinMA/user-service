@@ -1,25 +1,58 @@
-package ru.mikhailblokhin.dtos;
+package ru.mikhailblokhin.userservice.entities;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class UserResponseDto {
+@Entity
+@Table(name = "users")
+public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "age")
     private Integer age;
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public UserResponseDto() {
+    public User() {
     }
 
-    public UserResponseDto(Long id, String name, String email, Integer age, LocalDateTime createdAt) {
+    public User(String name, String email, Integer age) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
+
+    public User(Long id, String name, String email, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
+
+    public User(Long id, String name, String email, Integer age, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
         this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    private void createdAt() {
+        createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -63,21 +96,14 @@ public class UserResponseDto {
     }
 
     @Override
-    public String toString() {
-        return "UserResponseDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", createdAt=" + createdAt +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        UserResponseDto that = (UserResponseDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(age, that.age) && Objects.equals(createdAt, that.createdAt);
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(age, user.age) &&
+                Objects.equals(createdAt, user.createdAt);
     }
 
     @Override

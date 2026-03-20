@@ -1,58 +1,25 @@
-package ru.mikhailblokhin.entities;
-
-import jakarta.persistence.*;
+package ru.mikhailblokhin.userservice.dtos;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class UserResponseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "age")
     private Integer age;
-
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public User() {
+    public UserResponseDto() {
     }
 
-    public User(String name, String email, Integer age) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-    }
-
-    public User(Long id, String name, String email, Integer age) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.age = age;
-    }
-
-    public User(Long id, String name, String email, Integer age, LocalDateTime createdAt) {
+    public UserResponseDto(Long id, String name, String email, Integer age, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
         this.createdAt = createdAt;
-    }
-
-    @PrePersist
-    private void createdAt() {
-        createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -96,14 +63,25 @@ public class User {
     }
 
     @Override
+    public String toString() {
+        return "UserResponseDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(age, user.age) &&
-                Objects.equals(createdAt, user.createdAt);
+        UserResponseDto that = (UserResponseDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(age, that.age) &&
+                Objects.equals(createdAt, that.createdAt);
     }
 
     @Override

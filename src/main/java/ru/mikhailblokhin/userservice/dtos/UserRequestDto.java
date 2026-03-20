@@ -1,4 +1,6 @@
-package ru.mikhailblokhin.dtos;
+package ru.mikhailblokhin.userservice.dtos;
+
+import java.util.Objects;
 
 public class UserRequestDto {
 
@@ -53,5 +55,20 @@ public class UserRequestDto {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UserRequestDto that = (UserRequestDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(age, that.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, age);
     }
 }
