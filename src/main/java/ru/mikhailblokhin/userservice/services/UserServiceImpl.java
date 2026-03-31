@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.mikhailblokhin.userservice.dtos.UserRequestDto;
 import ru.mikhailblokhin.userservice.dtos.UserResponseDto;
+import ru.mikhailblokhin.userservice.entities.OperationType;
 import ru.mikhailblokhin.userservice.entities.User;
+import ru.mikhailblokhin.userservice.entities.UserChangeInfo;
 import ru.mikhailblokhin.userservice.exceptions.NoContentException;
 import ru.mikhailblokhin.userservice.mappers.UserMapper;
 import ru.mikhailblokhin.userservice.repositories.UserRepository;
@@ -16,9 +18,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserChangeInfoKafkaProducer userChangeInfoKafkaProducer;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserChangeInfoKafkaProducer userChangeInfoKafkaProducer) {
         this.userRepository = userRepository;
+        this.userChangeInfoKafkaProducer = userChangeInfoKafkaProducer;
     }
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -28,7 +32,12 @@ public class UserServiceImpl implements UserService {
         User user = UserMapper.toEntity(dto);
         User createdUser = userRepository.save(user);
         UserResponseDto responseDto = UserMapper.toDto(createdUser);
+        UserChangeInfo userChangeInfo = new UserChangeInfo(
+                OperationType.CREATION,
+                responseDto.getEmail()
+        );
         log.info("Пользователь {} создан", responseDto);
+        userChangeInfoKafkaProducer.produce(userChangeInfo);
         return responseDto;
     }
 
@@ -57,7 +66,12 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto delete(Long id) {
         UserResponseDto dto = read(id);
         userRepository.deleteById(id);
+        UserChangeInfo userChangeInfo = new UserChangeInfo(
+                OperationType.DELETION,
+                dto.getEmail()
+        );
         log.info("Пользователь {} был удален", dto);
+        userChangeInfoKafkaProducer.produce(userChangeInfo);
         return dto;
     }
 
