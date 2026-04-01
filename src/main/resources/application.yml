@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/users_info
+    username: postgres
+    password: 1234
+
+server:
+  port: 8081
