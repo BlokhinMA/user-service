@@ -1,4 +1,4 @@
-package ru.mikhailblokhin.services;
+package ru.mikhailblokhin.userservice.services;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,11 +6,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.mikhailblokhin.dtos.UserRequestDto;
-import ru.mikhailblokhin.dtos.UserResponseDto;
-import ru.mikhailblokhin.entities.User;
-import ru.mikhailblokhin.mappers.UserMapper;
-import ru.mikhailblokhin.repositories.UserRepositoryImpl;
+import ru.mikhailblokhin.userservice.dtos.UserRequestDto;
+import ru.mikhailblokhin.userservice.dtos.UserResponseDto;
+import ru.mikhailblokhin.userservice.entities.User;
+import ru.mikhailblokhin.userservice.mappers.UserMapper;
+import ru.mikhailblokhin.userservice.repositories.UserRepositoryHibImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,17 +18,17 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserServiceHibTest {
 
     @InjectMocks
-    private UserServiceImpl userService;
+    private UserServiceHibImpl userService;
 
     @Mock
-    private UserRepositoryImpl userRepository;
+    private UserRepositoryHibImpl userRepository;
 
     @BeforeEach
     void setUp() {
-        userService = new UserServiceImpl(userRepository);
+        userService = new UserServiceHibImpl(userRepository);
     }
 
     @AfterEach

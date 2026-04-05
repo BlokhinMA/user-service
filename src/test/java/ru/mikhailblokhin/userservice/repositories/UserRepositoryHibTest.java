@@ -1,4 +1,4 @@
-package ru.mikhailblokhin.repositories;
+package ru.mikhailblokhin.userservice.repositories;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
-import ru.mikhailblokhin.entities.User;
+import ru.mikhailblokhin.userservice.entities.User;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Testcontainers
-class UserRepositoryTest {
+class UserRepositoryHibTest {
 
     @Container
     private static final PostgreSQLContainer container = new PostgreSQLContainer("postgres")
@@ -25,7 +25,7 @@ class UserRepositoryTest {
 
     private static SessionFactory sessionFactory;
 
-    private static UserRepository userRepository;
+    private static UserRepositoryHib userRepositoryHib;
 
     @BeforeAll
     static void beforeAll() {
@@ -45,12 +45,12 @@ class UserRepositoryTest {
                 .addAnnotatedClass(User.class)
                 .buildSessionFactory();
 
-        userRepository = new UserRepositoryImpl(sessionFactory);
+        userRepositoryHib = new UserRepositoryHibImpl(sessionFactory);
     }
 
     @AfterAll
     static void afterAll() {
-        userRepository.exit();
+        userRepositoryHib.exit();
         assertTrue(sessionFactory.isClosed());
     }
 
@@ -61,8 +61,8 @@ class UserRepositoryTest {
                 "Email",
                 21
         );
-        userRepository.create(user);
-        User createdUser = userRepository.readLast();
+        userRepositoryHib.create(user);
+        User createdUser = userRepositoryHib.readLast();
         user.setId(createdUser.getId());
         user.setCreatedAt(createdUser.getCreatedAt());
         assertEquals(user, createdUser);
@@ -75,11 +75,11 @@ class UserRepositoryTest {
                 "Email",
                 21
         );
-        userRepository.create(user);
-        User createdUser = userRepository.readLast();
+        userRepositoryHib.create(user);
+        User createdUser = userRepositoryHib.readLast();
         long id = createdUser.getId();
-        userRepository.delete(id);
-        User deletedUser = userRepository.read(id);
+        userRepositoryHib.delete(id);
+        User deletedUser = userRepositoryHib.read(id);
         assertNull(deletedUser);
     }
 
@@ -90,8 +90,8 @@ class UserRepositoryTest {
                 "Email",
                 21
         );
-        userRepository.create(user);
-        User createdUser = userRepository.readLast();
+        userRepositoryHib.create(user);
+        User createdUser = userRepositoryHib.readLast();
         long id = createdUser.getId();
         LocalDateTime createdAt = createdUser.getCreatedAt();
         User updatingUser = new User(
@@ -100,8 +100,8 @@ class UserRepositoryTest {
                 "Email1",
                 22
         );
-        userRepository.update(updatingUser);
-        User updatedUser = userRepository.read(id);
+        userRepositoryHib.update(updatingUser);
+        User updatedUser = userRepositoryHib.read(id);
         updatingUser.setCreatedAt(createdAt);
         assertEquals(updatingUser, updatedUser);
     }
