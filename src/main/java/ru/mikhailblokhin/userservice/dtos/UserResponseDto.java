@@ -1,9 +1,11 @@
 package ru.mikhailblokhin.userservice.dtos;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class UserResponseDto {
+public class UserResponseDto extends RepresentationModel<UserResponseDto> {
 
     private Long id;
     private String name;
