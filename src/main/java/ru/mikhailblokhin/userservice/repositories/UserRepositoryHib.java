@@ -1,10 +1,10 @@
-package ru.mikhailblokhin.repositories;
+package ru.mikhailblokhin.userservice.repositories;
 
-import ru.mikhailblokhin.entities.User;
+import ru.mikhailblokhin.userservice.entities.User;
 
 import java.util.List;
 
-public interface UserRepository {
+public interface UserRepositoryHib {
     void create(User user);
     User read(long id);
     void update(User user);

@@ -1,4 +1,4 @@
-package ru.mikhailblokhin.utils;
+package ru.mikhailblokhin.userservice.utils;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,25 +1,25 @@
-package ru.mikhailblokhin.repositories;
+package ru.mikhailblokhin.userservice.repositories;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import ru.mikhailblokhin.entities.User;
+import ru.mikhailblokhin.userservice.entities.User;
 
 import java.util.List;
 
-public class UserRepositoryImpl implements UserRepository {
+public class UserRepositoryHibImpl implements UserRepositoryHib {
 
     private final SessionFactory sessionFactory;
 
-    public UserRepositoryImpl() {
+    public UserRepositoryHibImpl() {
         sessionFactory = new Configuration()
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(User.class)
                 .buildSessionFactory();
     }
 
-    public UserRepositoryImpl(SessionFactory sessionFactory) {
+    public UserRepositoryHibImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

@@ -1,16 +1,16 @@
-package ru.mikhailblokhin.utils;
+package ru.mikhailblokhin.userservice.utils;
 
-import ru.mikhailblokhin.dtos.UserRequestDto;
-import ru.mikhailblokhin.services.UserService;
-import ru.mikhailblokhin.services.UserServiceImpl;
+import ru.mikhailblokhin.userservice.dtos.UserRequestDto;
+import ru.mikhailblokhin.userservice.services.UserServiceHib;
+import ru.mikhailblokhin.userservice.services.UserServiceHibImpl;
 
 import java.util.Scanner;
 
-import static ru.mikhailblokhin.utils.ConsoleUtils.*;
+import static ru.mikhailblokhin.userservice.utils.ConsoleUtils.*;
 
 public class Application {
 
-    private static final UserService USER_SERVICE_IMPL = new UserServiceImpl();
+    private static final UserServiceHib USER_SERVICE_IMPL = new UserServiceHibImpl();
 
     public static void run() {
         boolean isRunning = true;
